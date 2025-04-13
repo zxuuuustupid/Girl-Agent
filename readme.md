@@ -29,7 +29,7 @@ DEEPSEEK_SETTINGS = {
         "model":"deepseek-chat",
 }
 ```
-and choose your preferred personality and characters
+**and choose your preferred personality and characters**
 ```
 AGENT_SETTINGS = {
         "name":"Miku",
@@ -39,7 +39,7 @@ AGENT_SETTINGS = {
         "personality":"miku"
 }
 ```
-`"personality"`names in [src/prompts/personalities](src/prompts/personalities). You can also to create your favorite character~   
+`"personality"`**names in [src/prompts/personalities](src/prompts/personalities). You can also to create your favorite character~**  
 
 **3. Run main.py**
 ```
