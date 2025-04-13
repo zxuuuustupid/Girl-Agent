@@ -5,3 +5,11 @@ DEEPSEEK_SETTINGS = {
         "api_base":"https://api.deepseek.com",
         "model":"deepseek-chat",
 }
+
+AGENT_SETTINGS = {
+        "name":"加藤惠",
+        "age":19,
+        "gender":"女",
+        "occupation":"学生",
+        "personality":"cute"
+}
