@@ -3,6 +3,8 @@ Disclaimer: Learned and carried open source code from the internet! Not original
 --------------
 This repo provide a girlfriend agent that can chat with us, also my first trial in LLM.
 In my opinion that's so interesting! Maybe I would focus on NLP rather than reliability, haha    
+Though the repo is named as "Girl" Agent, but it's not only for girls. You can easily make it your own agent. The name is just because of the interests of me to have some E-girlfriends.     
+
 Some anime girls here:    
 <table>
   <tr>
