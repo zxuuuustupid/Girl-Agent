@@ -10,5 +10,5 @@ class Planner:
 
     def create_plan(self, user_message: str, history: List[MemoryItem]) -> str:
         prompt = build_plan_prompt(user_message, history)
-        print(f'plan prompt: \n{prompt}')
+        # print(f'plan prompt: \n{prompt}')
         return self.llm.call(prompt)

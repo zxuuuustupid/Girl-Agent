@@ -1,6 +1,6 @@
-
 from typing import Any, Dict
 from dataclasses import dataclass
+from src.tools.registry import ToolRegistry
 
 _FUNCTION = Any
 
@@ -13,12 +13,21 @@ class Action:
 class ActionExecutor:
 
     def __init__(self):
-        self.available_actions = {}
+        self.tool_registry = ToolRegistry()
 
-    def register_action(self, name: str, action_fn: _FUNCTION):
-        self.available_actions[name] = action_fn
-
-    def execute(self, action_name, **params) -> Action:
-        result = self.available_actions[action_name](**params)
-        action = Action(action_name, params, result)
-        return action
+    def execute(self, action_name: str, **kwargs) -> Action:
+        try:
+            tool = self.tool_registry.get_tool(action_name)
+            result = tool.run(**kwargs)
+            return Action(
+                action_name=action_name,
+                params=kwargs,
+                result=result
+            )
+        except Exception as e:
+            print(f"执行动作 {action_name} 时出错: {str(e)}")
+            return Action(
+                action_name=action_name,
+                params=kwargs,
+                result={"status": "error", "message": str(e)}
+            )
