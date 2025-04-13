@@ -1,4 +1,6 @@
-# Girl Agent
+# Girl Agent    
+Disclaimer: Learned and carried open source code from the internet! Not original code!           
+--------------
 This repo provide a girlfriend agent that can chat with us, also my first trial in LLM.
 In my opinion that's so interesting! Maybe I would focus on NLP rather than reliability, haha    
 Some anime girls here:    
@@ -32,11 +34,11 @@ DEEPSEEK_SETTINGS = {
 **and choose your preferred personality and characters**
 ```
 AGENT_SETTINGS = {
-        "name":"Miku",
+        "name":"Lamia",
         "age":19,
         "gender":"女",
         "occupation":"学生",
-        "personality":"miku"
+        "personality":"Lamia"
 }
 ```
 `"personality"`**names in [src/prompts/personalities](src/prompts/personalities). You can also to create your favorite character~**  
