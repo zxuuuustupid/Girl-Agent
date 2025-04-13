@@ -1,7 +1,7 @@
 # Girl Agent
 This repo provide a girlfriend agent that can chat with us, also my first trial in LLM.
 In my opinion that's so interesting! Maybe I would focus on NLP rather than reliability, haha    
-Some anime girls I like:    
+Some anime girls here:    
 <table>
   <tr>
     <td align="center">
@@ -19,9 +19,9 @@ Some anime girls I like:
   </tr>
 </table>    
 
-### How to use 
-1. Clone the repo
-2. Use your **own** api-key in [src/config/settings.py](src/config/settings.py),  and change the model you use:
+## How to use 
+**1. Clone the repo**
+**2. Use your **own** api-key in [src/config/settings.py](src/config/settings.py),  and change the model you use:**
 ```
 DEEPSEEK_SETTINGS = {
         "api_key":"your-own-api-key",
@@ -41,7 +41,7 @@ AGENT_SETTINGS = {
 ```
 `"personality"`names in [src/prompts/personalities](src/prompts/personalities). You can also to create your favorite character~   
 
-3. Run main.py
+**3. Run main.py**
 ```
 python src/main.py
 ```
