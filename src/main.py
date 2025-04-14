@@ -1,3 +1,5 @@
+# src/main.py
+
 import sys
 import os
 import asyncio
@@ -5,9 +7,9 @@ import asyncio
 ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.append(ROOT_DIR)
 
-from src.agent.base import Agent
+from agent.base import Agent
 
-async def main():
+async def run_chat():
     agent = Agent()
     print("你的女友已上线，开始聊天吧！")
 
@@ -15,7 +17,7 @@ async def main():
         try:
             user_input = input("\n你: ").strip()
 
-            if user_input.lower() in ['exit','quit','退出']:
+            if user_input.lower() in ['exit', 'quit', '退出']:
                 print("\n再见啦！期待下次见面哦～")
                 break
 
@@ -28,13 +30,13 @@ async def main():
             print("\n\n再见啦！期待下次见面哦～")
             break
 
-        # except Exception as e:
-        #     print(f"\n抱歉，出了点小问题: {str(e)}")
-        #     continue
-
-if __name__ == "__main__":
+def main():
     try:
-        asyncio.run(main())
+        asyncio.run(run_chat())
     except KeyboardInterrupt:
         print("\n\n再见啦！期待下次见面哦～")
     sys.exit(0)
+
+# 可选：保留这句用于直接运行 src/main.py 测试
+if __name__ == "__main__":
+    main()
