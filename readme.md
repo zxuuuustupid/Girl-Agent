@@ -2,7 +2,8 @@
 Disclaimer: Learned and carried open source code from the internet! Not original code!           
 --------------
 This repo provide a girlfriend agent that can chat with us, also my first trial in LLM.
-In my opinion that's so interesting! Maybe I would focus on NLP rather than reliability, haha    
+In my opinion that's so interesting! Maybe I would focus on NLP rather than reliability, haha
+
 Though the repo is named as "Girl" Agent, but it's not only for girls. You can easily make it your own agent. The name is just because of the interests of me to have some E-girlfriends.     
 
 Some anime girls here:    
@@ -24,8 +25,8 @@ Some anime girls here:
 </table>    
 
 ## How to use 
-**1. Clone the repo**
-**2. Use your **own** api-key in [src/config/settings.py](src/config/settings.py),  and change the model you use:**
+1. Clone the repo         
+2. Use your own api-key in [src/config/settings.py](src/config/settings.py),  and change the model you use:      
 ```
 DEEPSEEK_SETTINGS = {
         "api_key":"your-own-api-key",
@@ -33,7 +34,7 @@ DEEPSEEK_SETTINGS = {
         "model":"deepseek-chat",
 }
 ```
-**and choose your preferred personality and characters**
+and choose your preferred personality and characters        
 ```
 AGENT_SETTINGS = {
         "name":"Lamia",
@@ -43,9 +44,12 @@ AGENT_SETTINGS = {
         "personality":"Lamia"
 }
 ```
-`"personality"`**names in [src/prompts/personalities](src/prompts/personalities). You can also to create your favorite character~**  
+`"personality"`names in [src/prompts/personalities](src/prompts/personalities). You can also to create your favorite character~      
 
-**3. Run main.py**
+3. Run main.py        
 ```
 python src/main.py
 ```
+
+## Future work:        
+packaged as a software (no deadline XD)
