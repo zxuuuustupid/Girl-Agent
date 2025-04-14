@@ -157,8 +157,11 @@ class ChatWindow(QMainWindow):
         cursor = self.chat_area.textCursor()
         cursor.movePosition(QTextCursor.End)
 
+        if message is None:
+            message = "（无回复）"
+
         if is_user:
-            # 用户消息样式（靠右）
+            # 用户消息样式
             cursor.insertHtml(f"""
                 <div style="margin: 10px; text-align: right;">
                     <div style="background-color: #fff0f5; color: #5a3d5a; border-radius: 15px; padding: 10px 15px; display: inline-block; max-width: 70%; margin-left: 30%;">
@@ -167,7 +170,7 @@ class ChatWindow(QMainWindow):
                 </div>
             """)
         else:
-            # 女友消息样式（靠左）
+            # 女友消息样式
             cursor.insertHtml(f"""
                 <div style="margin: 10px; text-align: left;">
                     <div style="background-color: #fff0f5; color: #5a3d5a; border-radius: 15px; padding: 10px 15px; display: inline-block; max-width: 70%; margin-right: 30%;">
@@ -201,7 +204,10 @@ class ChatWindow(QMainWindow):
         try:
             response = loop.run_until_complete(self.get_agent_response(message))
             print(f"Response from agent: {response}")  # 调试信息
-            self.append_message("女友", str(response), is_user=False)  # 直接显示 response
+            if response is None:
+                print("Warning: Response is None. Check Agent.process_input implementation.")
+                response = "抱歉，我没有理解你的问题。"  # 提供一个默认回复
+            self.append_message("女友", response, is_user=False)
         finally:
             loop.close()
 
