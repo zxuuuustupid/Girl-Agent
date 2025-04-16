@@ -52,4 +52,5 @@ python src/main.py
 ```
 
 ## Future work:        
+Now gui version(v1.1) has been upload!
 packaged as a software (no deadline XD)
