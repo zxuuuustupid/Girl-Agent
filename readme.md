@@ -10,15 +10,15 @@ Some anime girls here:
 <table>
   <tr>
     <td align="center">
-      <img src="images/kato.JPG" alt="Kato Megumi" width=250"><br>
+      <img src="assets/kato.JPG" alt="Kato Megumi" width=250"><br>
       <p><b>Kato Megumi</b></p>
     </td>
     <td align="center">
-      <img src="images/miku.png" alt="Nakano Miku" width="250"><br>
+      <img src="assets/miku.png" alt="Nakano Miku" width="250"><br>
       <p><b>Nakano Miku</b></p>
     </td>    
     <td align="center">
-      <img src="images/marin.JPG" alt="Kitagawa Marin" width="250"><br>
+      <img src="assets/marin.JPG" alt="Kitagawa Marin" width="250"><br>
       <p><b>Kitagawa Marin</b></p>
     </td>
   </tr>
