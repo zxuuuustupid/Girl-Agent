@@ -1,6 +1,6 @@
 from typing import Any
-from src.tools.tool_interface import Tool
-from src.config.settings import AGENT_SETTINGS
+from .tool_interface import Tool
+from config.settings import AGENT_SETTINGS
 
 class ChatTool(Tool):
     def name(self) -> str:

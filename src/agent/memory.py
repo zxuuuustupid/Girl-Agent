@@ -3,8 +3,8 @@ from typing import List,Literal
 from datetime import datetime
 from dataclasses import dataclass
 
-from src.agent.action import Action
-from src.config.settings import MEMORY_SIZE
+from .action import Action
+from config.settings import MEMORY_SIZE
 
 @dataclass
 class MemoryItem:

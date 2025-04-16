@@ -1,7 +1,7 @@
 from typing import Dict, Type
-from src.tools.tool_interface import Tool
+from .tool_interface import Tool
 
-from src.tools.chat_tools import (
+from .chat_tools import (
     ChatTool,
     AskGiftTool,
     GiveGiftTool,

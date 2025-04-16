@@ -1,10 +1,10 @@
 import json
 from typing import List
-from src.agent.action import Action
-from src.agent.memory import MemoryItem
-from src.prompts.response import RESPONSE_PROMPT
-from src.prompts.chain_of_thought import CHAIN_OF_THOUGHT, PLAN_FORMAT
-from src.tools.registry import ToolRegistry
+from agent.action import Action
+from agent.memory import MemoryItem
+from .response import RESPONSE_PROMPT
+from .chain_of_thought import CHAIN_OF_THOUGHT, PLAN_FORMAT
+from tools.registry import ToolRegistry
 
 def build_plan_prompt(user_input: str, history: List[MemoryItem]) -> str:
     history_lines = []

@@ -1,5 +1,5 @@
-from src.tools.registry import ToolRegistry
-from src.prompts.identity import IDENTITY
+from tools.registry import ToolRegistry
+from .identity import IDENTITY
 
 # 获取所有工具描述
 registry = ToolRegistry()

@@ -4,8 +4,9 @@ import sys
 import os
 import asyncio
 
-ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(ROOT_DIR)
+# print(ROOT_DIR)
 
 from agent.base import Agent
 

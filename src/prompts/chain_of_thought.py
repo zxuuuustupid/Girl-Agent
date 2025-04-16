@@ -1,4 +1,4 @@
-from src.prompts.identity import IDENTITY
+from .identity import IDENTITY
 
 PLAN_FORMAT = """1. 用户意图分析：[分析用户的意图和情感状态]
 2. 历史关联：[分析与历史对话的关联，如果有的话]

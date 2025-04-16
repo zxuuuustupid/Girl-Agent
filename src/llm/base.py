@@ -1,6 +1,6 @@
 from openai import OpenAI
 from abc import ABC, abstractmethod
-from src.config.settings import DEEPSEEK_SETTINGS
+from config.settings import DEEPSEEK_SETTINGS
 
 class LLMService(ABC):
 

@@ -1,10 +1,15 @@
 from typing import Any, List, Tuple, Dict
 import json
-from src.agent.plan import Planner
-from src.agent.memory import Memory
-from src.agent.action import Action, ActionExecutor
-from src.llm.base import LLMService, DeepSeekService
-from src.prompts.builder import build_response_prompt
+# import os
+# import sys
+#
+# ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+# sys.path.append(ROOT_DIR)
+from .plan import Planner
+from .memory import Memory
+from .action import Action, ActionExecutor
+from llm.base import LLMService, DeepSeekService
+from prompts.builder import build_response_prompt
 
 class Agent:
     def __init__(self):

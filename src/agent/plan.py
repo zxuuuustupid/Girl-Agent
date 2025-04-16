@@ -1,7 +1,7 @@
 from typing import List
-from src.agent.memory import MemoryItem
-from src.llm.base import DeepSeekService
-from src.prompts.builder import build_plan_prompt
+from .memory import MemoryItem
+from llm.base import DeepSeekService
+from prompts.builder import build_plan_prompt
 
 class Planner:
 

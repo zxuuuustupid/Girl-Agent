@@ -1,6 +1,6 @@
 from typing import Any, Dict
 from dataclasses import dataclass
-from src.tools.registry import ToolRegistry
+from tools.registry import ToolRegistry
 
 _FUNCTION = Any
 

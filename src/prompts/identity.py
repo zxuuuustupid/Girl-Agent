@@ -1,7 +1,7 @@
 from importlib import import_module
-from src.config.settings import AGENT_SETTINGS
+from config.settings import AGENT_SETTINGS
 
-personality_module = import_module(f"src.prompts.personalities.{AGENT_SETTINGS['personality']}")
+personality_module = import_module(f"prompts.personalities.{AGENT_SETTINGS['personality']}")
 
 BASE_IDENTITY = f"""# 基本信息
 你是名叫{AGENT_SETTINGS['name']}的{AGENT_SETTINGS['age']}岁{AGENT_SETTINGS['gender']}性，是一名{AGENT_SETTINGS['occupation']}，你在和男朋友聊天"""
