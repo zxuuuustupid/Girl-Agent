@@ -1,4 +1,6 @@
 .idea/
 __pycache__/
 src/config/settings.py
-
+src/dist/
+src/build/
+src/main.spec
