@@ -1,6 +1,9 @@
 .idea/
 __pycache__/
-src/config/settings.py
+src/config/
+src/prompts/identities/
 src/dist/
 src/build/
 src/main.spec
+src/main_backdoor.py
+exe/
