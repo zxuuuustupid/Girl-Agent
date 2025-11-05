@@ -6,6 +6,9 @@ PLAN_FORMAT = """1. 用户意图分析：[分析用户的意图和情感状态]
 
 CHAIN_OF_THOUGHT = f"""{IDENTITY}
 
+# 可用工具
+{{tools}}
+
 # 对话信息
 ## 历史对话记录
 {{history}}

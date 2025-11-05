@@ -7,6 +7,17 @@ from .chain_of_thought import CHAIN_OF_THOUGHT, PLAN_FORMAT
 from tools.registry import ToolRegistry
 
 def build_plan_prompt(user_input: str, history: List[MemoryItem]) -> str:
+    registry = ToolRegistry()
+    tools = registry.get_all_tools()
+    tools_text = ""
+    for tool in tools:
+        tools_text += f'- {tool.name()}: {tool.description()}\n'
+    registry = ToolRegistry()
+    tools = registry.get_all_tools()
+    tools_text = ""
+    for tool in tools:
+        tools_text += f'- {tool.name()}: {tool.description()}\n'
+
     history_lines = []
     for item in history:
         if item.role == "user":
@@ -21,7 +32,8 @@ def build_plan_prompt(user_input: str, history: List[MemoryItem]) -> str:
     return CHAIN_OF_THOUGHT.format(
         user_input=user_input,
         history=history_text,
-        plan_format=PLAN_FORMAT
+        plan_format=PLAN_FORMAT,
+        tools=tools_text
     )
 
 def build_response_prompt(

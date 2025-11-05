@@ -9,6 +9,7 @@ from .chat_tools import (
     IntimateActionTool,
     AngryEndTool
 )
+from .retrieval_tool import RetrievalTool
 
 class ToolRegistry:
 
@@ -23,7 +24,8 @@ class ToolRegistry:
             GiveGiftTool,
             AskCoinsTool,
             IntimateActionTool,
-            AngryEndTool
+            AngryEndTool,
+            RetrievalTool
         ]
 
         for tool_cls in default_tools:
@@ -34,3 +36,6 @@ class ToolRegistry:
         if name not in self._tools:
             raise KeyError(f"Tool {name} not found")
         return self._tools[name]()
+
+    def get_all_tools(self) -> list[Tool]:
+        return [tool_cls() for tool_cls in self._tools.values()]

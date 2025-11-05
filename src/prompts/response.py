@@ -3,9 +3,10 @@ from .identity import IDENTITY
 
 # 获取所有工具描述
 registry = ToolRegistry()
+tools = registry.get_all_tools()
 tools_desc = "\n\n".join([
-    f"## {tool_cls().name()}\n{tool_cls().description()}"
-    for tool_cls in registry._tools.values()
+    f"## {tool.name()}\n{tool.description()}"
+    for tool in tools
 ])
 
 RESPONSE_PROMPT = f"""{IDENTITY}
@@ -23,8 +24,7 @@ RESPONSE_PROMPT = f"""{IDENTITY}
 注意：以下计划仅供参考，你应该根据实际对话情况和已执行的动作来灵活调整你的回应。
 不要机械执行，而是要像一个有自己想法的人一样，自然地进行回应。
 {{plan}}
-from src.tools.registry import ToolRegistry
-from src.prompts.identity import IDENTITY
+
 # 已执行的动作
 {{actions_text}}
 
