@@ -1,7 +1,7 @@
 .idea/
 __pycache__/
 src/config/
-src/prompts/identities/
+src/prompts/personalities/
 src/dist/
 src/build/
 src/main.spec
