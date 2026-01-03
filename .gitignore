@@ -10,4 +10,4 @@ exe/
 src/run_backdoor.bat
 src/.vscode/settings.json
 tests/test_rag.py
-src/config/settings.py
+settings.py
