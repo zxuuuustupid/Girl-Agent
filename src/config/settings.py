@@ -12,4 +12,6 @@ AGENT_SETTINGS = {
         "gender":"女",
         "occupation":"学生",
         "personality":"mature"
+        
 }
+
