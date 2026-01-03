@@ -1,6 +1,12 @@
 .idea/
 __pycache__/
-src/config/settings.py
+src/config/
+src/prompts/personalities/
 src/dist/
 src/build/
 src/main.spec
+src/main_backdoor.py
+exe/
+src/run_backdoor.bat
+src/.vscode/settings.json
+tests/test_rag.py
