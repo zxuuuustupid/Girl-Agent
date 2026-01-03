@@ -1,7 +1,9 @@
 .idea/
 __pycache__/
 src/config/
-src/prompts/personalities/
+src/prompts/personalities/*
+!src/prompts/personalities/cute.py
+!src/prompts/personalities/mature.py
 src/dist/
 src/build/
 src/main.spec
