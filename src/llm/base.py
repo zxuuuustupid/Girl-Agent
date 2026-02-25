@@ -1,6 +1,6 @@
 from openai import OpenAI
 from abc import ABC, abstractmethod
-from config.settings import DEEPSEEK_SETTINGS
+from config.settings import DEEPSEEK_SETTINGS, ZHIPU_SETTINGS, LLM_PROVIDER
 
 class LLMService(ABC):
 
@@ -25,3 +25,28 @@ class DeepSeekService(LLMService):
             }])
 
         return response.choices[0].message.content.strip()
+
+class ZhipuService(LLMService):
+
+    def __init__(self):
+        self._llm_client = OpenAI(
+            api_key=ZHIPU_SETTINGS["api_key"],
+            base_url=ZHIPU_SETTINGS["api_base"],
+        )
+
+    def call(self, prompt: str) -> str:
+        response = self._llm_client.chat.completions.create(
+            model=ZHIPU_SETTINGS["model"],
+            messages=[{
+                "role": "user",
+                "content": prompt
+            }])
+
+        return response.choices[0].message.content.strip()
+
+def get_llm_service() -> LLMService:
+    """根据配置返回对应的LLM服务实例"""
+    if LLM_PROVIDER == "zhipu":
+        return ZhipuService()
+    else:
+        return DeepSeekService()

@@ -8,7 +8,7 @@ import json
 from .plan import Planner
 from .memory import Memory
 from .action import Action, ActionExecutor
-from llm.base import LLMService, DeepSeekService
+from llm.base import get_llm_service
 from prompts.builder import build_response_prompt
 
 class Agent:
@@ -16,7 +16,7 @@ class Agent:
         self.memory = Memory()
         self.planner = Planner()
         self.executer = ActionExecutor()
-        self.llm = DeepSeekService()
+        self.llm = get_llm_service()
 
     async def process_input(self, user_message: str) -> str:
         await self.memory.add_memory(user_message, role="user")

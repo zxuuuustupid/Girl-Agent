@@ -13,3 +13,4 @@ src/run_backdoor.bat
 src/.vscode/settings.json
 tests/test_rag.py
 settings.py
+src/.claude/settings.local.json
