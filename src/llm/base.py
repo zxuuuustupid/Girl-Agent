@@ -1,7 +1,7 @@
 import anthropic
 from openai import OpenAI
 from abc import ABC, abstractmethod
-from config.settings import DEEPSEEK_SETTINGS, ZHIPU_SETTINGS, LLM_PROVIDER
+from config.settings import DEEPSEEK_SETTINGS, ZHIPU_SETTINGS, ZHIZENG_SETTINGS, LLM_PROVIDER
 
 class LLMService(ABC):
 
@@ -45,6 +45,24 @@ class ZhipuService(LLMService):
 
         return response.choices[0].message.content.strip()
 
+class ZhizengService(LLMService):
+
+    def __init__(self):
+        self._llm_client = OpenAI(
+            api_key=ZHIZENG_SETTINGS["api_key"],
+            base_url=ZHIZENG_SETTINGS["api_base"],
+        )
+
+    def call(self, prompt: str) -> str:
+        response = self._llm_client.chat.completions.create(
+            model=ZHIZENG_SETTINGS["model"],
+            messages=[{
+                "role": "system",
+                "content": prompt
+            }])
+
+        return response.choices[0].message.content.strip()
+
 class MiniMaxService(LLMService):
 
     def __init__(self):
@@ -58,11 +76,12 @@ class MiniMaxService(LLMService):
     def call(self, prompt: str) -> str:
         response = self._client.messages.create(
             model=self._model,
-            max_tokens=1024,
+            max_tokens=4096,
             system=prompt,
-            messages=[{"role": "user", "content": "hello"}]
+            messages=[{"role": "user", "content": prompt}]
         )
-        return "\n".join([block.text for block in response.content if block.type == "text"])
+        text_blocks = [block.text for block in response.content if block.type == "text"]
+        return "\n".join(text_blocks) if text_blocks else ""
 
 def get_llm_service() -> LLMService:
     """根据配置返回对应的LLM服务实例"""
@@ -70,5 +89,7 @@ def get_llm_service() -> LLMService:
         return ZhipuService()
     elif LLM_PROVIDER == "minimax":
         return MiniMaxService()
+    elif LLM_PROVIDER == "zhizeng":
+        return ZhizengService()
     else:
         return DeepSeekService()

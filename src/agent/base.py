@@ -18,18 +18,17 @@ class Agent:
         self.executer = ActionExecutor()
         self.llm = get_llm_service()
 
-    async def process_input(self, user_message: str) -> str:
+    async def process_input(self, user_message: str) -> List[str]:
+        """处理用户输入，返回AI输出的列表"""
         await self.memory.add_memory(user_message, role="user")
-        """处理用户输入，返回AI回复"""
-        # 生成plan用作后续迭代的cot
-        plan: str = self.planner.create_plan(user_message,self.memory.memory)
-        # 生成回复
+
+        outputs: List[str] = []
+        plan: str = self.planner.create_plan(user_message, self.memory.memory)
         response: str = self._gen_response(user_message, plan)
 
         thought, data = self._parse_response(response)
         cur_actions: List[Action] = []
 
-        # 不断迭代执行action
         while data != {}:
             action_name = data.get("name", "")
             params = data.get("params", {})
@@ -38,18 +37,25 @@ class Agent:
             cur_actions.append(action)
 
             tool = self.executer.tool_registry.get_tool(action_name)
-            if action_name in ["end","angry_end","chat"]:
+            result_text = tool.format_result(action.result, action.params)
+
+            # 收集输出
+            if thought:
+                outputs.append(thought)
+            if result_text:
+                outputs.append(result_text)
+
+            if action_name in ["end", "angry_end", "chat"]:
                 await self.memory.add_memory(thought, role="assistant")
                 break
 
             await self.memory.add_memory(thought, role="assistant")
-            result_text = tool.format_result(action.result, action.params)
             await self.memory.add_memory(result_text, role="action_result")
 
             response = self._gen_response(user_message, plan, cur_actions)
             thought, data = self._parse_response(response)
 
-            return thought
+        return outputs
 
     def _gen_response(self,
                      user_message: str,
@@ -78,6 +84,6 @@ class Agent:
             action_data = data.get("action", {})
             return thought, action_data
         except json.JSONDecodeError:
-            print(f"解析响应失败: {response[:200]}")
+            print(f"解析响应失败: {response}")
             return "", {}
 
