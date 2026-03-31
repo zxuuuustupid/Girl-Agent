@@ -10,9 +10,6 @@ tools_desc = "\n\n".join([
 
 RESPONSE_PROMPT = f"""{IDENTITY}
 
-# 可执行动作
-{tools_desc}
-
 # 对话信息
 ## 历史对话记录
 {{history}}
@@ -23,8 +20,7 @@ RESPONSE_PROMPT = f"""{IDENTITY}
 注意：以下计划仅供参考，你应该根据实际对话情况和已执行的动作来灵活调整你的回应。
 不要机械执行，而是要像一个有自己想法的人一样，自然地进行回应。
 {{plan}}
-from src.tools.registry import ToolRegistry
-from src.prompts.identity import IDENTITY
+
 # 已执行的动作
 {{actions_text}}
 

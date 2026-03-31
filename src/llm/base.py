@@ -1,8 +1,8 @@
+import anthropic
 from openai import OpenAI
 from anthropic import Anthropic
 from abc import ABC, abstractmethod
-import httpx
-from config.settings import DEEPSEEK_SETTINGS, ZHIPU_SETTINGS, MINIMAX_SETTINGS, LLM_PROVIDER
+from config.settings import DEEPSEEK_SETTINGS, ZHIPU_SETTINGS, ZHIZENG_SETTINGS, LLM_PROVIDER
 
 class LLMService(ABC):
 
@@ -46,33 +46,43 @@ class ZhipuService(LLMService):
 
         return response.choices[0].message.content.strip()
 
+class ZhizengService(LLMService):
+
+    def __init__(self):
+        self._llm_client = OpenAI(
+            api_key=ZHIZENG_SETTINGS["api_key"],
+            base_url=ZHIZENG_SETTINGS["api_base"],
+        )
+
+    def call(self, prompt: str) -> str:
+        response = self._llm_client.chat.completions.create(
+            model=ZHIZENG_SETTINGS["model"],
+            messages=[{
+                "role": "system",
+                "content": prompt
+            }])
+
+        return response.choices[0].message.content.strip()
+
 class MiniMaxService(LLMService):
 
     def __init__(self):
-        self._api_key = MINIMAX_SETTINGS["api_key"]
-        self._model = MINIMAX_SETTINGS["model"]
-        self._client = httpx.Client(timeout=60.0)
-        self._url = "https://api.minimax.chat/v1/text/chatcompletion_v2"
+        from config.settings import MINIMAX_API_KEY, MINIMAX_API_BASE, MINIMAX_MODEL
+        self._client = anthropic.Anthropic(
+            api_key=MINIMAX_API_KEY,
+            base_url=MINIMAX_API_BASE,
+        )
+        self._model = MINIMAX_MODEL
 
     def call(self, prompt: str) -> str:
-        headers = {
-            "Authorization": f"Bearer {self._api_key}",
-            "Content-Type": "application/json"
-        }
-
-        payload = {
-            "model": self._model,
-            "messages": [
-                {"role": "system", "content": "You are a helpful assistant."},
-                {"role": "user", "content": prompt}
-            ]
-        }
-
-        response = self._client.post(self._url, headers=headers, json=payload)
-        response.raise_for_status()
-
-        result = response.json()
-        return result["choices"][0]["message"]["content"].strip()
+        response = self._client.messages.create(
+            model=self._model,
+            max_tokens=4096,
+            system=prompt,
+            messages=[{"role": "user", "content": prompt}]
+        )
+        text_blocks = [block.text for block in response.content if block.type == "text"]
+        return "\n".join(text_blocks) if text_blocks else ""
 
 def get_llm_service() -> LLMService:
     """根据配置返回对应的LLM服务实例"""
@@ -80,5 +90,7 @@ def get_llm_service() -> LLMService:
         return ZhipuService()
     elif LLM_PROVIDER == "minimax":
         return MiniMaxService()
+    elif LLM_PROVIDER == "zhizeng":
+        return ZhizengService()
     else:
         return DeepSeekService()

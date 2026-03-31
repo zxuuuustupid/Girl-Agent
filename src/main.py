@@ -25,7 +25,9 @@ async def run_chat():
             if not user_input:
                 continue
 
-            response = await agent.process_input(user_message=user_input)
+            outputs = await agent.process_input(user_message=user_input)
+            for out in outputs:
+                print(out)
 
         except KeyboardInterrupt:
             print("\n\n再见啦！期待下次见面哦～")
