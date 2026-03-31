@@ -1,6 +1,4 @@
-import anthropic
 from openai import OpenAI
-from anthropic import Anthropic
 from abc import ABC, abstractmethod
 from config.settings import DEEPSEEK_SETTINGS, ZHIPU_SETTINGS, ZHIZENG_SETTINGS, LLM_PROVIDER
 
@@ -67,6 +65,8 @@ class ZhizengService(LLMService):
 class MiniMaxService(LLMService):
 
     def __init__(self):
+        import anthropic
+
         from config.settings import MINIMAX_API_KEY, MINIMAX_API_BASE, MINIMAX_MODEL
         self._client = anthropic.Anthropic(
             api_key=MINIMAX_API_KEY,

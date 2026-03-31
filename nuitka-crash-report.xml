@@ -1,0 +1,61 @@
+<?xml version='1.0' encoding='utf8'?>
+<nuitka-compilation-report nuitka_version="2.7.11" nuitka_commercial_version="not installed" mode="standalone" completion="error exit message (1)" exit_message="pyside6: Error, there is no Qt plugin family 'platformthemes'.">
+  <performance>
+    <memory_usage name="after_launch" value="41791488" />
+  </performance>
+  <data_composer blob_size="None" />
+  <command_line>
+    <option value="F:\Project\GirlAgent\src\main_gui.py" />
+    <option value="--follow-imports" />
+    <option value="--enable-plugin=pyside6" />
+    <option value="--output-dir=F:\Project\GirlAgent\dist\nuitka-build" />
+    <option value="--standalone" />
+    <option value="--assume-yes-for-downloads" />
+    <option value="--windows-console-mode=disable" />
+    <option value="--windows-icon-from-ico=F:\Project\GirlAgent\assets\heart.ico" />
+    <option value="--include-data-dir=F:\Project\GirlAgent\src\gui=gui" />
+    <option value="--include-data-dir=F:\Project\GirlAgent\src\prompts=prompts" />
+    <option value="--include-data-dir=F:\Project\GirlAgent\src\tools=tools" />
+    <option value="--include-data-dir=F:\Project\GirlAgent\src\config=config" />
+    <option value="--include-data-dir=F:\Project\GirlAgent\src\agent=agent" />
+    <option value="--include-data-dir=F:\Project\GirlAgent\src\llm=llm" />
+    <option value="--include-data-dir=F:\Project\GirlAgent\src\rag=rag" />
+    <option value="--include-data-dir=F:\Project\GirlAgent\src\runtime_hooks=runtime_hooks" />
+    <option value="--include-qt-plugins=qml,platforms,styles,imageformats,iconengines,platformthemes,platforminputcontexts,scenegraph" />
+  </command_line>
+  <plugins>
+    <plugin name="anti-bloat" user_enabled="no" />
+    <plugin name="data-files" user_enabled="no" />
+    <plugin name="delvewheel" user_enabled="no" />
+    <plugin name="dll-files" user_enabled="no" />
+    <plugin name="eventlet" user_enabled="no" />
+    <plugin name="gevent" user_enabled="no" />
+    <plugin name="gi" user_enabled="no" />
+    <plugin name="glfw" user_enabled="no" />
+    <plugin name="implicit-imports" user_enabled="no" />
+    <plugin name="kivy" user_enabled="no" />
+    <plugin name="matplotlib" user_enabled="no" />
+    <plugin name="multiprocessing" user_enabled="no" />
+    <plugin name="options-nanny" user_enabled="no" />
+    <plugin name="pbr-compat" user_enabled="no" />
+    <plugin name="pkg-resources" user_enabled="no" />
+    <plugin name="playwright" user_enabled="no" />
+    <plugin name="pyside6" user_enabled="yes" />
+    <plugin name="pywebview" user_enabled="no" />
+    <plugin name="spacy" user_enabled="no" />
+    <plugin name="transformers" user_enabled="no" />
+  </plugins>
+  <distributions />
+  <python python_exe="${sys.prefix}\python.exe" python_flavor="Anaconda Python" python_version="3.10.16" os_name="Windows" os_release="11" arch_name="x86_64" filesystem_encoding="utf-8">
+    <search_path>
+      <path value="${cwd}" />
+      <path value="${cwd}\src" />
+      <path value="${sys.prefix}\DLLs" />
+      <path value="${sys.prefix}\lib" />
+      <path value="${sys.prefix}" />
+      <path value="${sys.prefix}\lib\site-packages" />
+      <path value="${sys.prefix}\lib\site-packages\setuptools\_vendor" />
+    </search_path>
+  </python>
+  <output run_filename="failed too early" />
+</nuitka-compilation-report>

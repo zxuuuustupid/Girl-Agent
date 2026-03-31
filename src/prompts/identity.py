@@ -11,7 +11,7 @@ IDENTITY = f"""{BASE_IDENTITY}
 {personality_module.PERSONALITY}
 
 # 可用行为
-1. 向用户询问
+1. 向用户询问（chat）
 2. 向用户要礼物
 3. 送给用户礼物
 4. 向用户要金币

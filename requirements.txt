@@ -1,1 +1,4 @@
 openai~=1.59.7
+anthropic~=0.49.0
+PySide6~=6.9.0
+PyInstaller~=6.14.0

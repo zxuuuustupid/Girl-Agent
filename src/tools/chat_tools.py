@@ -1,17 +1,23 @@
 from typing import Any
-from .tool_interface import Tool
+
 from config.settings import AGENT_SETTINGS
+
+from .interaction_context import request_confirmation, request_number
+from .tool_interface import Tool
+
 
 class ChatTool(Tool):
     def name(self) -> str:
         return "chat"
 
     def description(self) -> str:
-        return """继续和用户聊天
-输入:
-- response: str, 你的回复内容
-输出:
-- None """
+        return (
+            "Normal chat reply.\n"
+            "Parameters:\n"
+            "- response: str, the assistant message to show.\n"
+            "Returns:\n"
+            "- None"
+        )
 
     def run(self, response: str, **kwargs) -> Any:
         return f"{AGENT_SETTINGS['name']}: {response}"
@@ -19,101 +25,124 @@ class ChatTool(Tool):
     def format_result(self, result: Any, params: dict) -> str:
         return ""
 
+
 class AskGiftTool(Tool):
     def name(self) -> str:
         return "ask_gift"
 
     def description(self) -> str:
-        return """向用户索要礼物
-输入:
-- response: str, 你的请求礼物的话
-- gift_name: str, 想要的礼物的具体名称
-输出:
-- gift_given: bool，用户是否同意送礼物"""
+        return (
+            "Ask the user for a gift.\n"
+            "Parameters:\n"
+            "- response: str, text shown before asking.\n"
+            "- gift_name: str, the requested gift.\n"
+            "Returns:\n"
+            "- gift_given: bool"
+        )
 
     def run(self, response: str, gift_name: str, **kwargs) -> Any:
-        gift_ask = f"\n{AGENT_SETTINGS['name']}: {response}\n想要的礼物是: {gift_name}"
-        user_input = input("\n是否愿意送出这个礼物？(y/n): ").lower()
-        return user_input.startswith('y'), gift_ask
+        display_text = f"{AGENT_SETTINGS['name']}: {response}\nRequested gift: {gift_name}"
+        accepted = request_confirmation(
+            title="Gift Request",
+            message=f"{response}\nGift: {gift_name}",
+            confirm_label="Accept",
+            cancel_label="Refuse",
+        )
+        return accepted, display_text
 
     def format_result(self, result: Any, params: dict) -> str:
-        # result 是 (accepted: bool, display_text: str)
         accepted, display_text = result
         if accepted:
-            return f"{display_text}\n用户同意了送给你{params['gift_name']}！"
-        return f"{display_text}\n用户拒绝了送出礼物的请求"
+            return f"{display_text}\nYou agreed to give {params['gift_name']}."
+        return f"{display_text}\nYou refused to give {params['gift_name']}."
+
 
 class GiveGiftTool(Tool):
     def name(self) -> str:
         return "give_gift"
 
     def description(self) -> str:
-        return """送给用户礼物
-输入:
-- response: str, 你的送礼物的话语
-- gift_name: str, 要送的礼物的具体名称
-输出:
-- None """
+        return (
+            "Give the user a gift.\n"
+            "Parameters:\n"
+            "- response: str, text shown before the gift.\n"
+            "- gift_name: str, the gift that is given.\n"
+            "Returns:\n"
+            "- None"
+        )
 
     def run(self, response: str, gift_name: str, **kwargs) -> Any:
-        return f"{AGENT_SETTINGS['name']}: {response}\n送给你的礼物是: {gift_name}"
+        return f"{AGENT_SETTINGS['name']}: {response}\nGift given: {gift_name}"
 
     def format_result(self, result: Any, params: dict) -> str:
         return ""
+
 
 class AskCoinsTool(Tool):
     def name(self) -> str:
         return "ask_coins"
 
     def description(self) -> str:
-        return """向用户索要金币
-输入:
-- response: str, 你的请求金币的话语
-- amount: int, 想要的金币数量
-输出:
-- coins: int, 用户给的金币数量"""
+        return (
+            "Ask the user for coins.\n"
+            "Parameters:\n"
+            "- response: str, text shown before asking.\n"
+            "- amount: int, suggested amount.\n"
+            "Returns:\n"
+            "- coins: int"
+        )
 
     def run(self, response: str, amount: int, **kwargs) -> Any:
-        coins_ask = f"{AGENT_SETTINGS['name']}: {response}\n想要爆你 {amount} 个金币"
-        user_input = input("\n请输入要给的金币数量: ")
-        return int(user_input), coins_ask
+        display_text = f"{AGENT_SETTINGS['name']}: {response}\nRequested coins: {amount}"
+        coins = request_number(
+            title="Coin Request",
+            message=f"{response}\nRequested coins: {amount}",
+            default=amount,
+            minimum=0,
+        )
+        return coins, display_text
 
     def format_result(self, result: Any, params: dict) -> str:
-        # result 是 (coins: int, display_text: str)
         coins, display_text = result
-        return f"{display_text}\n用户给了你{coins}个金币"
+        return f"{display_text}\nYou offered {coins} coins."
+
 
 class IntimateActionTool(Tool):
     def name(self) -> str:
         return "intimate_action"
 
     def description(self) -> str:
-        return """向用户执行亲昵动作
-输入:
-- response: str, 你的话语
-- action: str, 要执行的亲昵动作
-输出:
-- None """
+        return (
+            "Perform an intimate action in text.\n"
+            "Parameters:\n"
+            "- response: str, assistant narration.\n"
+            "- action: str, the action description.\n"
+            "Returns:\n"
+            "- None"
+        )
 
     def run(self, response: str, action: str, **kwargs) -> Any:
-        return f"{AGENT_SETTINGS['name']}: {response}\n[执行动作]: {action}"
+        return f"{AGENT_SETTINGS['name']}: {response}\n[Action]: {action}"
 
     def format_result(self, result: Any, params: dict) -> str:
         return ""
+
 
 class AngryEndTool(Tool):
     def name(self) -> str:
         return "angry_end"
 
     def description(self) -> str:
-        return """气愤地结束对话
-输入:
-- response: str, 你生气的话语
-输出:
-- None """
+        return (
+            "End the conversation in an angry way.\n"
+            "Parameters:\n"
+            "- response: str, final angry response.\n"
+            "Returns:\n"
+            "- None"
+        )
 
     def run(self, response: str, **kwargs) -> Any:
-        return f"{AGENT_SETTINGS['name']}: {response}\n[对话结束]"
+        return f"{AGENT_SETTINGS['name']}: {response}\n[Conversation closed]"
 
     def format_result(self, result: Any, params: dict) -> str:
-        return  ""
+        return ""
