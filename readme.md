@@ -52,5 +52,8 @@ python src/main.py
 ```
 
 ## Future work:        
-Now gui version(v1.1) has been upload!       
+Now gui version(v1.1) has been upload!
+```
+D:\Users\15217\anaconda3\envs\girlagent-env\python.exe -m PyInstaller --clean --noconfirm main.spec
+```
 packaged as a software(finished)
