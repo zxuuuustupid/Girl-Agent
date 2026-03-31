@@ -1,4 +1,4 @@
-# =============================================
+﻿# =============================================
 # GirlAgent - .gitignore
 # 规则：只允许添加，不允许删除
 # =============================================
@@ -97,3 +97,28 @@ desktop.ini
 # =============================================
 *.log
 logs/
+
+# =============================================
+# Additional ignores (append-only)
+# =============================================
+build/
+dist/
+*.pyz
+*.tmp
+*.bak
+*.orig
+__pycache__/
+
+# PyInstaller / packaging temp files
+*.toc
+*.pyz
+*.pkg
+warn-*.txt
+xref-*.html
+
+# Runtime logs
+startup.log
+
+# Local env files
+.env
+.env.*
