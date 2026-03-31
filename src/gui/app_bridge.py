@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import asyncio
+import sys
 import threading
 from dataclasses import dataclass
 from pathlib import Path
@@ -54,7 +55,10 @@ class AppBridge(QObject):
         self._install_interaction_handlers()
 
     def _resolve_hero_image(self) -> str:
-        root_dir = Path(__file__).resolve().parents[2]
+        if getattr(sys, "frozen", False) and hasattr(sys, "_MEIPASS"):
+            root_dir = Path(getattr(sys, "_MEIPASS"))
+        else:
+            root_dir = Path(__file__).resolve().parents[2]
         preferred = {
             "miku": "miku.png",
             "mature": "kato.JPG",
@@ -63,7 +67,13 @@ class AppBridge(QObject):
             "slapper": "marin.JPG",
         }
         filename = preferred.get(self._personality, "kato.JPG")
-        return Path(root_dir, "assets", filename).as_uri()
+        image_path = Path(root_dir, "assets", filename)
+        if not image_path.exists():
+            fallback = Path(root_dir, "assets", "heart.png")
+            if fallback.exists():
+                return fallback.as_uri()
+            return ""
+        return image_path.as_uri()
 
     def _install_interaction_handlers(self) -> None:
         def confirmation_handler(
