@@ -67,11 +67,17 @@ class Agent:
 
     def _parse_response(self, response: str) -> Tuple[str, Dict[str, Any]]:
         try:
-            data = json.loads(response)
+            # 去掉 markdown 代码块
+            text = response.strip()
+            if text.startswith("```"):
+                text = text.split("```")[1] if "```" in text else text
+                text = text.lstrip("json\n").rstrip("`")
+
+            data = json.loads(text)
             thought = data.get("response", "")
             action_data = data.get("action", {})
             return thought, action_data
         except json.JSONDecodeError:
-            print(f"解析响应失败: {response}")
+            print(f"解析响应失败: {response[:200]}")
             return "", {}
 
