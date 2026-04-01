@@ -1,6 +1,6 @@
 from openai import OpenAI
 from abc import ABC, abstractmethod
-from config.settings import DEEPSEEK_SETTINGS, ZHIPU_SETTINGS, ZHIZENG_SETTINGS, LLM_PROVIDER
+from config.settings import DEEPSEEK_SETTINGS, ZHIPU_SETTINGS, ZHIZENG_SETTINGS, LLM_PROVIDER, OPENROUTER_SETTINGS
 
 class LLMService(ABC):
 
@@ -92,5 +92,26 @@ def get_llm_service() -> LLMService:
         return MiniMaxService()
     elif LLM_PROVIDER == "zhizeng":
         return ZhizengService()
+    elif LLM_PROVIDER == "openrouter":
+        return OpenRouterService()
     else:
         return DeepSeekService()
+
+
+class OpenRouterService(LLMService):
+
+    def __init__(self):
+        self._llm_client = OpenAI(
+            api_key=OPENROUTER_SETTINGS["api_key"],
+            base_url=OPENROUTER_SETTINGS["api_base"],
+        )
+
+    def call(self, prompt: str) -> str:
+        response = self._llm_client.chat.completions.create(
+            model=OPENROUTER_SETTINGS["model"],
+            messages=[{
+                "role": "system",
+                "content": prompt
+            }])
+
+        return response.choices[0].message.content.strip()

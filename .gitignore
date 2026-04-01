@@ -30,10 +30,11 @@ venv.bak/
 # =============================================
 # 项目特定的配置和临时文件
 # =============================================
-src/config/
 src/build/
 src/dist/
 src/main.spec
+src/config/provider.py
+src/config/__pycache__/
 *.spec.bak
 *.manifest
 *.pkg
@@ -63,12 +64,10 @@ tests/test_rag.py
 htmlcov/
 
 # =============================================
-# 环境变量和密钥
+# 环境变量和密钥（只忽略 .env，settings.py 模板可被 track）
 # =============================================
 .env
 .env.*
-*.env
-settings.py
 
 # =============================================
 # IDE 和编辑器
