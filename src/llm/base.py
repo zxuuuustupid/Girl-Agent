@@ -81,7 +81,7 @@ class MiniMaxService(LLMService):
             system=prompt,
             messages=[{"role": "user", "content": prompt}]
         )
-        text_blocks = [block.text for block in response.content if block.type == "text"]
+        text_blocks = [block.text for block in response.content if block.type == "text"] if response.content else []
         return "\n".join(text_blocks) if text_blocks else ""
 
 def get_llm_service() -> LLMService:

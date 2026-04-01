@@ -10,6 +10,9 @@ from .memory import Memory
 from .action import Action, ActionExecutor
 from llm.base import get_llm_service
 from prompts.builder import build_response_prompt
+from config.settings import AGENT_SETTINGS
+
+AGENT_NAME = AGENT_SETTINGS["name"]
 
 class Agent:
     def __init__(self):
@@ -41,9 +44,9 @@ class Agent:
 
             # 收集输出
             if thought:
-                outputs.append(thought)
+                outputs.append(f"{AGENT_NAME}：{thought}")
             if result_text:
-                outputs.append(result_text)
+                outputs.append(f"{AGENT_NAME}：{result_text}")
 
             if action_name in ["end", "angry_end", "chat"]:
                 await self.memory.add_memory(thought, role="assistant")

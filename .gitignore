@@ -42,8 +42,8 @@ src/main.spec
 # Personality 模块（只保留核心性格）
 # =============================================
 src/prompts/personalities/*
-!src/prompts/personalities/cute.py
-!src/prompts/personalities/mature.py
+# !src/prompts/personalities/cute.py
+# !src/prompts/personalities/mature.py
 
 # =============================================
 # Backdoor 相关文件

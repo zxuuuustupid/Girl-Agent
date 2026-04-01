@@ -5,12 +5,20 @@ from agent.memory import MemoryItem
 from .response import RESPONSE_PROMPT
 from .chain_of_thought import CHAIN_OF_THOUGHT, PLAN_FORMAT
 from tools.registry import ToolRegistry
+from config.settings import AGENT_SETTINGS
+
+# 根据性格决定对用户的称呼
+_PERSONALITY_CALL = {
+    "slaver": "主人",
+    "slapper": "大人",
+}
+USER_CALL = _PERSONALITY_CALL.get(AGENT_SETTINGS["personality"], "男朋友")
 
 def build_plan_prompt(user_input: str, history: List[MemoryItem]) -> str:
     history_lines = []
     for item in history:
         if item.role == "user":
-            history_lines.append(f"男朋友: {item.message}")
+            history_lines.append(f"{USER_CALL}: {item.message}")
         elif item.role == "assistant":
             history_lines.append(f"你: {item.message}")
         elif item.role == "action_result":
@@ -41,7 +49,7 @@ def build_response_prompt(
     history_lines = []
     for item in history:
         if item.role == "user":
-            history_lines.append(f"男朋友: {item.message}")
+            history_lines.append(f"{USER_CALL}: {item.message}")
         elif item.role == "assistant":
             history_lines.append(f"你: {item.message}")
         elif item.role == "action_result":
