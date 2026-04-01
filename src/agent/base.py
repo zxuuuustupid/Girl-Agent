@@ -36,6 +36,10 @@ class Agent:
             action_name = data.get("name", "")
             params = data.get("params", {})
 
+            # 防御：params 必须是 dict，否则转为 { "response": 原值 }
+            if not isinstance(params, dict):
+                params = {"response": str(params)}
+
             action = self.executer.execute(action_name, **params)
             cur_actions.append(action)
 
@@ -84,9 +88,14 @@ class Agent:
 
             data = json.loads(text)
             thought = data.get("response", "")
+
+            # 防御：action.params 必须是 dict
             action_data = data.get("action", {})
+            if "params" in action_data and not isinstance(action_data["params"], dict):
+                action_data["params"] = {"response": str(action_data["params"])}
+
             return thought, action_data
         except json.JSONDecodeError:
-            print(f"解析响应失败: {response}")
-            return "", {}
+            # JSON 解析失败时，把原始文本当 chat 的 response
+            return response.strip(), {"name": "chat", "params": {"response": response.strip()}}
 

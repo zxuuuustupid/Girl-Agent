@@ -46,5 +46,5 @@ AGENT_SETTINGS = {
     "age": 19,
     "gender": "女",
     "occupation": "学生",
-    "personality":"knight"
+    "personality": "cute"
 }

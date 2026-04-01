@@ -1,7 +1,13 @@
 from importlib import import_module
 from config.settings import AGENT_SETTINGS
 
-_personality_module = import_module(f"prompts.personalities.{AGENT_SETTINGS['personality']}")
+# 支持健康人格（根目录）和 NSFW 人格（nsfw/ 子目录）
+_personality_name = AGENT_SETTINGS['personality']
+try:
+    _personality_module = import_module(f"prompts.personalities.{_personality_name}")
+except ModuleNotFoundError:
+    _personality_module = import_module(f"prompts.personalities.nsfw.{_personality_name}")
+
 PERSONALITY = _personality_module.PERSONALITY
 
 # 强化角色沉浸：先注入角色灵魂，再给具体行为指南
