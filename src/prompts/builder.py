@@ -3,8 +3,7 @@ from typing import List
 from agent.action import Action
 from agent.memory import MemoryItem
 from .response import RESPONSE_PROMPT
-from .chain_of_thought import CHAIN_OF_THOUGHT, PLAN_FORMAT
-from tools.registry import ToolRegistry
+from .chain_of_thought import CHAIN_OF_THOUGHT
 from config.settings import AGENT_SETTINGS
 
 # 根据性格决定对用户的称呼
@@ -18,19 +17,18 @@ def build_plan_prompt(user_input: str, history: List[MemoryItem]) -> str:
     history_lines = []
     for item in history:
         if item.role == "user":
-            history_lines.append(f"{USER_CALL}: {item.message}")
+            history_lines.append("<user>%s: %s</user>" % (USER_CALL, item.message))
         elif item.role == "assistant":
-            history_lines.append(f"你: {item.message}")
+            history_lines.append("<assistant>你: %s</assistant>" % item.message)
         elif item.role == "action_result":
-            history_lines.append(f"{item.message}")
+            history_lines.append("<action_result>%s</action_result>" % item.message)
 
     history_text = "\n".join(history_lines) if history_lines else "无历史对话记录"
 
-    return CHAIN_OF_THOUGHT.format(
-        user_input=user_input,
-        history=history_text,
-        plan_format=PLAN_FORMAT
-    )
+    return CHAIN_OF_THOUGHT % {
+        "user_input": user_input,
+        "history": history_text
+    }
 
 def build_response_prompt(
     user_message: str,
@@ -49,17 +47,18 @@ def build_response_prompt(
     history_lines = []
     for item in history:
         if item.role == "user":
-            history_lines.append(f"{USER_CALL}: {item.message}")
+            history_lines.append("<user>%s: %s</user>" % (USER_CALL, item.message))
         elif item.role == "assistant":
-            history_lines.append(f"你: {item.message}")
+            history_lines.append("<assistant>你: %s</assistant>" % item.message)
         elif item.role == "action_result":
-            history_lines.append(f"{item.message}")
+            history_lines.append("<action_result>%s</action_result>" % item.message)
 
     history_text = "\n".join(history_lines) if history_lines else "无历史对话记录"
 
     # 构建动作历史
     actions_text = "无已执行的动作"
     if actions:
+        from tools.registry import ToolRegistry
         registry = ToolRegistry()
         action_lines = []
         for action in actions:
@@ -71,19 +70,19 @@ def build_response_prompt(
                 result_text = tool.format_result(action.result, action.params)
 
                 # 构建动作描述
-                action_desc = f"- {action.action_name}"
+                action_desc = "- %s" % action.action_name
                 if params:
-                    action_desc += f": {json.dumps(params, ensure_ascii=False)}"
+                    action_desc += ": %s" % json.dumps(params, ensure_ascii=False)
                 if result_text:
-                    action_desc += f"\n  结果: {result_text}"
+                    action_desc += "\n  结果: %s" % result_text
 
                 action_lines.append(action_desc)
 
         actions_text = "\n".join(action_lines)
 
-    return RESPONSE_PROMPT.format(
-        user_message=user_message,
-        history=history_text,
-        plan=plan,
-        actions_text=actions_text
-    )
+    return RESPONSE_PROMPT % {
+        "user_message": user_message,
+        "history": history_text,
+        "plan": plan,
+        "actions_text": actions_text
+    }

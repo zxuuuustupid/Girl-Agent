@@ -51,8 +51,11 @@ class Agent:
                 outputs.append(f"{AGENT_NAME}：{thought}")
             if result_text:
                 outputs.append(f"{AGENT_NAME}：{result_text}")
+            # intimate_action 的动作描述
+            if action_name == "intimate_action" and params.get("response"):
+                outputs.append(f"（{params.get('action')}：{params.get('response')}）")
 
-            if action_name in ["end", "angry_end", "chat"]:
+            if action_name in ["end", "angry_end", "chat", "intimate_action"]:
                 await self.memory.add_memory(thought, role="assistant")
                 break
 
@@ -74,9 +77,18 @@ class Agent:
             actions=actions,
             history=self.memory.memory
         )
+        # print("\n" + "="*60)
+        # print("[DEBUG] FULL PROMPT:")
+        # print("="*60)
         # print(prompt)
-        # print()
-        return self.llm.call(prompt)
+        # print("="*60 + "\n")
+        llm_output = self.llm.call(prompt)
+        # print("\n" + "="*60)
+        # print("[DEBUG] LLM OUTPUT:")
+        # print("="*60)
+        # print(llm_output)
+        # print("="*60 + "\n")
+        return llm_output
 
     def _parse_response(self, response: str) -> Tuple[str, Dict[str, Any]]:
         try:
