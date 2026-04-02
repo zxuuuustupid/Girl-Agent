@@ -31,8 +31,8 @@
 
 <br>
 
-> *Though named "Girl Agent", this framework is fully generic — create any AI companion you want.*
-> *The name simply reflects the author's personal interests. 😄*
+> _Though named "Girl Agent", this framework is fully generic — create any AI companion you want._
+> _The name simply reflects the author's personal interests. 😄_
 
 </div>
 
@@ -40,19 +40,17 @@
 
 ## ✨ Highlights
 
-| Feature | Description |
-|---------|-------------|
-| 🧠 **Plan‑Act‑Respond Loop** | Chain-of-thought reasoning drives every reply — the agent *thinks* before it speaks |
-| 🎭 **Swappable Personalities** | Hot-swap between `cute`, `tsundere`, `idol`, `gamer`, `neighbor` and more — or write your own |
-| 🔧 **Reactive Action System** | Built-in tools (`chat`, `ask_gift`, `give_gift`, `ask_coins`, `intimate_action`, `angry_end`) orchestrate dynamic, multi-turn interactions |
-| 🖥️ **Dual Interface** | CLI for quick testing, modern **PySide6/QML** GUI for daily use |
-| 🔌 **Multi-Provider LLM** | Seamlessly switch between **DeepSeek · Zhipu GLM · MiniMax · OpenRouter** — any OpenAI-compatible endpoint works |
-| 💾 **Memory System** | Short-term conversation memory with async long-term RAG storage (extensible) |
-| 📦 **Standalone Build** | Ship as a single executable via PyInstaller |
+| Feature                        | Description                                                                                                                                |
+| ------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| 🧠 **Plan‑Act‑Respond Loop**   | Chain-of-thought reasoning drives every reply — the agent _thinks_ before it speaks                                                        |
+| 🎭 **Swappable Personalities** | Hot-swap between `cute`, `tsundere`, `idol`, `gamer`, `neighbor` and more — or write your own                                              |
+| 🔧 **Reactive Action System**  | Built-in tools (`chat`, `ask_gift`, `give_gift`, `ask_coins`, `intimate_action`, `angry_end`) orchestrate dynamic, multi-turn interactions |
+| 🖥️ **Dual Interface**          | CLI for quick testing, modern **PySide6/QML** GUI for daily use                                                                            |
+| 🔌 **Multi-Provider LLM**      | Seamlessly switch between **DeepSeek · Zhipu GLM · MiniMax · OpenRouter** — any OpenAI-compatible endpoint works                           |
+| 💾 **Memory System**           | Short-term conversation memory with async long-term RAG storage (extensible)                                                               |
+| 📦 **Standalone Build**        | Ship as a single executable via PyInstaller                                                                                                |
 
 ---
-
-
 
 ## 🚀 Quick Start
 
@@ -113,6 +111,34 @@ python src/main_gui.py
 
 ---
 
+## 🎭 Personality System
+
+Personalities live in `src/prompts/personalities/` as plain Python files exporting a `PERSONALITY` string constant. The agent loads the named module at startup.
+
+| Built-in      | Vibe                                 |
+| ------------- | ------------------------------------ |
+| `cute`        | Sweet, affectionate, upbeat          |
+| `tsundere`    | Hot-cold, secretly caring            |
+| `idol`        | Energetic, sparkly, fan-service      |
+| `gamer`       | Competitive, meme-savvy              |
+| `neighbor`    | Warm, grounded, girl-next-door       |
+| `shynakamura` | Shy, soft-spoken, gradually opens up |
+
+### Creating a Custom Personality
+
+```python
+# src/prompts/personalities/my_char.py
+
+PERSONALITY = """
+You are Aria, a mysterious librarian who speaks in riddles
+and quotes classical literature. You are warm but enigmatic,
+always hinting at deeper truths hidden between the lines...
+"""
+```
+
+Then set `"personality": "my_char"` in `AGENT_SETTINGS` — done.
+
+---
 
 ## 🏗️ Architecture
 
@@ -213,56 +239,27 @@ Girl-Agent/
 
 ---
 
-## 🎭 Personality System
-
-Personalities live in `src/prompts/personalities/` as plain Python files exporting a `PERSONALITY` string constant. The agent loads the named module at startup.
-
-| Built-in | Vibe |
-|----------|------|
-| `cute` | Sweet, affectionate, upbeat |
-| `tsundere` | Hot-cold, secretly caring |
-| `idol` | Energetic, sparkly, fan-service |
-| `gamer` | Competitive, meme-savvy |
-| `neighbor` | Warm, grounded, girl-next-door |
-| `shynakamura` | Shy, soft-spoken, gradually opens up |
-
-### Creating a Custom Personality
-
-```python
-# src/prompts/personalities/my_char.py
-
-PERSONALITY = """
-You are Aria, a mysterious librarian who speaks in riddles
-and quotes classical literature. You are warm but enigmatic,
-always hinting at deeper truths hidden between the lines...
-"""
-```
-
-Then set `"personality": "my_char"` in `AGENT_SETTINGS` — done.
-
----
-
 ## 🔧 Tool System
 
-Tools are the agent's *hands*. Each tool implements four methods:
+Tools are the agent's _hands_. Each tool implements four methods:
 
-| Method | Purpose |
-|--------|---------|
-| `name()` | Unique identifier used in action dispatch |
-| `description()` | Shown to the LLM so it knows when/how to invoke the tool |
-| `run()` | Executes the tool logic, may have side-effects (e.g. GUI prompts) |
-| `format_result()` | Converts the raw result into a human-readable string for memory |
+| Method            | Purpose                                                           |
+| ----------------- | ----------------------------------------------------------------- |
+| `name()`          | Unique identifier used in action dispatch                         |
+| `description()`   | Shown to the LLM so it knows when/how to invoke the tool          |
+| `run()`           | Executes the tool logic, may have side-effects (e.g. GUI prompts) |
+| `format_result()` | Converts the raw result into a human-readable string for memory   |
 
 ### Built-in Tools
 
-| Tool | Action |
-|------|--------|
-| `chat` | Standard conversational reply |
-| `ask_gift` | Ask the user for a specific gift (with accept/refuse dialog) |
-| `give_gift` | Give the user a gift |
-| `ask_coins` | Request virtual coins (with numeric input dialog) |
-| `intimate_action` | Narrate an intimate/roleplay action |
-| `angry_end` | End the conversation angrily |
+| Tool              | Action                                                       |
+| ----------------- | ------------------------------------------------------------ |
+| `chat`            | Standard conversational reply                                |
+| `ask_gift`        | Ask the user for a specific gift (with accept/refuse dialog) |
+| `give_gift`       | Give the user a gift                                         |
+| `ask_coins`       | Request virtual coins (with numeric input dialog)            |
+| `intimate_action` | Narrate an intimate/roleplay action                          |
+| `angry_end`       | End the conversation angrily                                 |
 
 ### Adding a New Tool
 
